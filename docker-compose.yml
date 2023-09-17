@@ -1,0 +1,27 @@
+version: "3"
+services:
+  db:
+    container_name: kimyo-porjects-db
+    image: postgres:15
+    ports:
+      - "5433:5432"
+    restart: always
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: lesson_1
+      POSTGRES_NAME: mahmud
+      POSTGRES_PASSWORD: root
+  web:
+    container_name: kimyo-projects
+    ports:
+      - "8080:8080"
+    restart: always
+    build: .
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/lesson_1
+      SPRING_DATASOURCE_USERNAME: mahmud
+      SPRING_DATASOURCE_PASSWORD: root
+
